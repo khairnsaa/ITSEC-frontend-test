@@ -3,9 +3,11 @@ import SideMenu from "../components/SideMenu";
 import Card from '../components/Card'
 import Navbar from "../components/Navbar";
 
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { TempContext } from "../context/TempContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { io } from "socket.io-client";
+import { Line, LineChart,XAxis, YAxis} from "recharts";
 import { 
     faArrowRightArrowLeft,
     faBroadcastTower, 
@@ -16,11 +18,18 @@ import {
     faLowVision, 
     faTemperature2,
     faWind, 
-    faBell, faEnvelope, faTimes } from "@fortawesome/free-solid-svg-icons";
+    faBell, faEnvelope, faTimes, faArrowsDownToLine } from "@fortawesome/free-solid-svg-icons";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 
 const Dashboard = () => {
     const {coords, weather, getTemp, getCoords} = useContext(TempContext)
+    const [data, setData] = useState([]);
+    
+    const socket = io('http://localhost:3001', {
+      transports: ['websocket', 'polling']
+    });
+
     const openMenu = () => {
         document.querySelector('.sidebar').style.transform = 'translateX(0)'
     }
@@ -30,7 +39,11 @@ const Dashboard = () => {
 
     useEffect(() => {
         getCoords()
-        // getTemp(coords.lat, coords.lon)
+        getTemp(coords.lat, coords.lon)
+        socket.on('cpu', cpuPercent => {
+            setData(currentData => [...currentData, cpuPercent]);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
         <section className="App">
@@ -77,6 +90,12 @@ const Dashboard = () => {
                             <p>32°C</p>
                             <p>36°C</p>
                         </section>
+                        <ProgressBar
+                            className="wrapper"
+                            barContainerClassName="container-bar"
+                            completedClassName="barCompleted"
+                            customLabel=" "
+                        />
                         <section className="details">
                             <p>details</p>
                             <div className="card-lists">
@@ -90,8 +109,22 @@ const Dashboard = () => {
                         </section>
                     </div>
                     <div className="container earnings">
-                        <h1>earnings</h1>
-                        <Card />
+                        <h1>Earnings</h1>
+                        <p>earnings</p>
+                        <div className="earnings-content">
+                            <LineChart width={500} height={300} data={data}>
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Line dataKey="value" />
+                            </LineChart>
+                            <div className="earnings-text">
+                                <h1 className="total-earning">$123.34</h1>
+                                <p className="profit-loss"><span className="status">+42%</span> since last week</p>
+                                <div className="crypto">11800 <span className="crypto-name">ETH</span></div>
+                                <div className="crypto">11800 <span className="crypto-name">SNT</span></div>
+                            </div>
+
+                        </div>
                     </div>
                     <div className="container current-balance">
                         <section className="balance-header">
@@ -117,7 +150,7 @@ const Dashboard = () => {
                                 <p>Today</p>
                             </div>
                             <button className="btn">
-                                <FontAwesomeIcon icon={faArrowRightArrowLeft} />
+                                <FontAwesomeIcon icon={faArrowsDownToLine} />
                                 <span>Withdraw</span>
                             </button>
                         </section>

@@ -2,7 +2,7 @@ import { faBell, faEnvelope, faList, faSearch, faSignOut } from "@fortawesome/fr
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({handleOpen}) => {
 

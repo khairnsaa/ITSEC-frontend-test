@@ -5,7 +5,7 @@ import {
     faPaintBrush, 
     faGripVertical, 
     faTableColumns, 
-    faObjectUngroup, faSquare
+    faObjectUngroup, faSquare, faList, faToggleOn, faFolderClosed, faTable, faLocationDot
 } from '@fortawesome/free-solid-svg-icons';
 
 const SideMenu = () => {
@@ -38,6 +38,28 @@ const SideMenu = () => {
             <div className="side-menu">
                 <FontAwesomeIcon icon={faGripVertical} />
                 <span> Icons</span>
+            </div>
+            <p>Layout</p>
+            <div className="side-menu">
+                <FontAwesomeIcon icon={faFolderClosed} />
+                <span> Subheader</span>
+            </div>
+            <div className="side-menu">
+                <FontAwesomeIcon icon={faList} />
+                <span> Builder</span>
+            </div>
+            <div className="side-menu">
+                <FontAwesomeIcon icon={faToggleOn} />
+                <span> General</span>
+            </div>
+            <p>Components</p>
+            <div className="side-menu">
+                <FontAwesomeIcon icon={faTable} />
+                <span> Tables</span>
+            </div>
+            <div className="side-menu">
+                <FontAwesomeIcon icon={faLocationDot} />
+                <span> Maps</span>
             </div>
         </div>
     );

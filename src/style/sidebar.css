@@ -1,0 +1,39 @@
+/* ---------------- Sidebar.js ---------------- */
+.sidebar{
+    background-color: #0C0628;
+    padding: 1rem 4rem 1rem 1rem;
+  }
+  
+.black-box{
+    margin: auto;
+    background-color: #000;
+    width: 90%;
+    height: 5rem;
+}
+
+.profile-notif-message-small{ display: none; }
+
+.close-menu{ display: none;}
+
+/* ---------------- SideMenu.js ---------------- */
+
+.side-menu{
+    margin: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    align-items: center;
+}
+
+@media screen and (max-width: 800px) {
+
+    .sidebar{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: translateX(-100%);
+        transition: 0.3s;
+        overflow-y: scroll;
+    }
+}

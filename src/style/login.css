@@ -1,0 +1,49 @@
+/* ---------------- Login.js ---------------- */
+.login-container, .login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login{ min-height: 100vh;}
+
+.login-container{
+    width: 40%;
+    background-color: #4F49C1;
+    padding: 4rem 2rem;
+    border-radius: 0.5rem;
+}
+
+.login-container input{
+    background-color: transparent;
+    border-radius: 0.5rem;
+    outline: none;
+    border: 0.1rem solid #f0f0f0;
+    color: #f0f0f0;
+    padding: 0.5rem 1.5rem;
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.login-container input::placeholder{ color: #f0f0f0; }
+
+.login-btn{
+    border-radius: 0.5rem;
+    padding: 0.5rem 3rem;
+    outline: none;
+    border: 0.1rem solid #f0f0f0;
+    background-color: transparent;
+    color: #f0f0f0;
+    margin-top: 0.5rem;
+}
+
+.login-btn:hover{
+    cursor: pointer;
+    background-color: #f0f0f0;
+    color: #1C1450;
+}
+
+@media screen and (max-width: 800px) {
+    .login-container{ width: 80%;}
+}
