@@ -2,43 +2,30 @@ import Sidebar from "../components/Sidebar";
 import SideMenu from "../components/SideMenu";
 import Card from '../components/Card'
 import Navbar from "../components/Navbar";
+
+import { useEffect, useContext } from "react";
+import { TempContext } from "../context/TempContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightArrowLeft,faBroadcastTower, faCloud,faCreditCard,faDroplet, faFile, faLowVision, faTemperature2,faWind } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { 
+    faArrowRightArrowLeft,
+    faBroadcastTower, 
+    faCloud,
+    faCreditCard,
+    faDroplet, 
+    faFile, 
+    faLowVision, 
+    faTemperature2,
+    faWind, 
+    faBell, faEnvelope, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 const Dashboard = () => {
-    const [coords, setCoords] = useState({
-        lat: 0,
-        lon: 0
-    })
-    const [ weather, setWeather] = useState({
-        temp: 0,
-        feelsLike: 0,
-        wind: 0,
-        humidity: 0,
-        pressure: 0
-    })
-    const getCoords = () => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            setCoords({
-                lat: position.coords.latitude,
-                lon: position.coords.longitude
-            })
-        })
+    const {coords, weather, getTemp, getCoords} = useContext(TempContext)
+    const openMenu = () => {
+        document.querySelector('.sidebar').style.transform = 'translateX(0)'
     }
-    const getTemp = async (lat, lon) => {
-        const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=b7859343dfd4328b7e4e43fbe4f2c882&units=metric`)
-        const data = await res.data
-        console.log(data.main.temp)
-        setWeather({
-            temp: data.main.temp,
-            feelsLike: data.main.feels_like,
-            wind: data.wind.speed,
-            humidity: data.main.humidity,
-            pressure: data.main.pressure
-        })
+    const closeMenu = () => {
+        document.querySelector('.sidebar').style.transform = 'translateX(-100%)'
     }
 
     useEffect(() => {
@@ -48,11 +35,31 @@ const Dashboard = () => {
     return (
         <section className="App">
             <Sidebar>
+                <div className="close-menu" onClick={closeMenu}>
+                    <FontAwesomeIcon icon={faTimes} />
+                </div>
                 <div className="black-box"></div>
                 <SideMenu />
+                <div className="profile-notif-message-small">
+                    <div className="side-menu">
+                        <FontAwesomeIcon icon={faBell} />
+                        <span> Notification</span>
+                    </div>
+                    <div className="side-menu">
+                        <FontAwesomeIcon icon={faEnvelope} />
+                        <span> Messages</span>
+                    </div>
+                    <div className="message-container">
+                        <div className="flags"></div>
+                        <p>English</p>
+                    </div>
+                    <div className="profil-container">
+                        <div className="profil-picture"></div>
+                    </div>
+                </div>
             </Sidebar>
             <section className="content">
-                <Navbar />
+                <Navbar handleOpen={openMenu} />
                 <div className="dashboard">
                     <div className="container weather">
                         <section className="title-date">
