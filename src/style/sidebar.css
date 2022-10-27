@@ -24,6 +24,8 @@
     align-items: center;
 }
 
+.side-menu:hover{ cursor: pointer;}
+
 @media screen and (max-width: 800px) {
 
     .sidebar{
@@ -35,5 +37,6 @@
         transform: translateX(-100%);
         transition: 0.3s;
         overflow-y: scroll;
+        z-index: 999;
     }
 }

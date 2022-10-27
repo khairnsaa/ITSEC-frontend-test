@@ -15,7 +15,7 @@ io.on('connection', client => {
         value: cpuPercent
       });
     });
-  }, 60000);
+  }, 300000);
 });
 
 server.listen(3001);

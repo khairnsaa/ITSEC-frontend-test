@@ -1,30 +1,11 @@
 import { faBell, faEnvelope, faList, faSearch, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Cookies from "js-cookie";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const Navbar = ({handleOpen}) => {
-
-    const [open, setOpen] = useState(false)
-    const navigate = useNavigate()
+const Navbar = ({handleOpen, openDropdown, open, logoutUser}) => {
 
     const openSearch = () => {
         document.querySelector('.search-input').classList.toggle('show')
     }
-
-    const openDropdown = () => {
-        if(open) setOpen(false)
-        else setOpen(true)
-    }
-
-    const logoutUser = () => {
-        Cookies.remove('username')
-        Cookies.remove('password')
-        
-        navigate('/login')
-    }
-
 
     return (
         <nav>
@@ -38,14 +19,14 @@ const Navbar = ({handleOpen}) => {
                 </div>
             </div>
             <div className="profile-notif-message">
-                <FontAwesomeIcon icon={faBell} />
+                <FontAwesomeIcon icon={faBell}/>
                 <FontAwesomeIcon icon={faEnvelope} />
                 <div className="message-container">
                     <div className="flags"></div>
                     <p>English</p>
                 </div>
-                <div className="profil-container">
-                    <div className="profil-picture" onClick={openDropdown}></div>
+                <div className="profil-container" onClick={openDropdown}>
+                    <div className="profil-picture"></div>
                     {
                         open &&
                         <div className="profil-popup" onClick={logoutUser}>

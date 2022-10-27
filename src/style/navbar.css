@@ -101,4 +101,9 @@ nav{
     }
 
     .show{display: block;}
+
+    .profil-popup{
+        bottom: -40%;
+        left: 0;
+    }
 }

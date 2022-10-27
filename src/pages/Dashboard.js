@@ -18,13 +18,19 @@ import {
     faLowVision, 
     faTemperature2,
     faWind, 
-    faBell, faEnvelope, faTimes, faArrowsDownToLine } from "@fortawesome/free-solid-svg-icons";
+    faBell, faEnvelope, faTimes, faArrowsDownToLine, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import ProgressBar from "@ramonak/react-progress-bar";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 const Dashboard = () => {
     const {coords, weather, getTemp, getCoords} = useContext(TempContext)
     const [data, setData] = useState([]);
+    const [open, setOpen] = useState(false)
+
+    
+    const navigate = useNavigate()
     
     const socket = io('http://localhost:3001', {
       transports: ['websocket', 'polling']
@@ -35,6 +41,18 @@ const Dashboard = () => {
     }
     const closeMenu = () => {
         document.querySelector('.sidebar').style.transform = 'translateX(-100%)'
+    }
+
+    const openDropdown = () => {
+        if(open) setOpen(false)
+        else setOpen(true)
+    }
+
+    const logoutUser = () => {
+        Cookies.remove('username')
+        Cookies.remove('password')
+        
+        navigate('/login')
     }
 
     useEffect(() => {
@@ -66,13 +84,20 @@ const Dashboard = () => {
                         <div className="flags"></div>
                         <p>English</p>
                     </div>
-                    <div className="profil-container">
+                    <div className="profil-container" onClick={openDropdown}>
                         <div className="profil-picture"></div>
+                        {
+                            open &&
+                            <div className="profil-popup" onClick={logoutUser}>
+                                <FontAwesomeIcon icon={faSignOut} />
+                                <span>Logout</span>
+                            </div>
+                        }
                     </div>
                 </div>
             </Sidebar>
             <section className="content">
-                <Navbar handleOpen={openMenu} />
+                <Navbar handleOpen={openMenu} openDropdown={openDropdown} open={open} logoutUser={logoutUser} />
                 <div className="dashboard">
                     <div className="container weather">
                         <section className="title-date">
@@ -91,6 +116,7 @@ const Dashboard = () => {
                             <p>36°C</p>
                         </section>
                         <ProgressBar
+                            completed={40}
                             className="wrapper"
                             barContainerClassName="container-bar"
                             completedClassName="barCompleted"
